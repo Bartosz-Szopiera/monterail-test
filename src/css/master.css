@@ -6,8 +6,82 @@ body, html {
 body {
   overflow-x: hidden;
   background: rgba(255,225,173,1);
+  font-family: 'Signika', sans-serif;
 }
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  outline: none;
+}
+
+button:hover,
+.avatar:hover {
+  cursor: pointer;
+}
+
+.flexRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexCol {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.upCase {
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.normal {
+  font-style: normal;
+  font-family: 'Signika', sans-serif;
+  font-size: 0.9em;
+  font-weight: normal;
+}
+
+.italic {
+  font-size: 0.95em;
+  font-style: italic;
+  font-weight: bold;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.blue {
+  color: #0266b9;
+  font-weight: bold;
+}
+
+.grey {
+  color: #a7a9ac;
+  font-size: 0.9em;
+}
+
+.text {
+  font-size: 0.80em;
+  line-height: 1.5em;
+  word-spacing: 0.07em;
+  color: #615e5e;
+}
+
+.arrowUp {
+  border-top: none;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid;
+}
+
+.arrowDown {
+  border-top: 10px solid;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: none;
 }
