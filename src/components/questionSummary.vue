@@ -7,22 +7,22 @@
         <div class="author avatar"><div></div></div>
         <div class="description">
           <div class="action">
-            <span class="author">Author</span>
-            <span class="did">found</span>
-            <span class="adjective">on</span>
-            <span class="source">source</span>
+            <span class="author blue">Eva</span>
+            <span class="did grey upCase">is asking</span>
+            <span class="adjective grey upCase"></span>
+            <span class="source grey upCase"></span>
           </div>
-          <div class="subject">Subject</div>
+          <div class="subject blue italic">Will insulin make my patient gain weight?</div>
         </div>
       </div>
 
       <div class="activity">
         <div class="author">
-          <div class="actionType">found</div>
+          <div class="actionType grey upCase">asked</div>
         </div>
         <div class="counter">
-          <div class="number">X</div>
-          <p>more activities</p>
+          <div class="number">3</div>
+          <p class="italic">more activities</p>
         </div>
         <div class="peer">
           <div class="avatar"></div>
@@ -46,9 +46,9 @@
 
     <div class="sidebar">
       <div class="stats">
-        <p><span>X</span> related discussion</p>
-        <p><span>X</span> peers involved</p>
-        <p><span>X</span> conversations</p>
+        <p><span class="number normal">1</span><span class="italic"> related discussion</span></p>
+        <p><span class="number normal">6</span><span class="italic"> peers involved</span></p>
+        <p><span class="number normal">3</span><span class="italic"> conversations</span></p>
       </div>
     </div>
 
@@ -77,6 +77,11 @@ export default {
   width: 600px;
 }
 
+.main >* {
+  z-index: 1;
+  position: relative;
+}
+
 /*Shadow*/
 .main::after {
   content: '';
@@ -86,10 +91,10 @@ export default {
   right: 0px;
   top: 0px;
   bottom: 0px;
-  background: none;
+  background: transparent;
   box-shadow: -2px 0 2px 0 #EEE, 2px 0 2px 0 #EEE;
   border-bottom: 2px solid rgba(223,243,253,1);
-  z-index: -100;
+  z-index: 0;
 }
 
 .header {
@@ -116,6 +121,10 @@ export default {
 .header .description {
   padding: 15px 15px;
   width: 100%;
+}
+
+.header .description .subject {
+  font-size: 1.2em;
 }
 
 .activity {
@@ -234,7 +243,6 @@ export default {
 }
 
 .sidebar .stats p span {
-  font-style: normal;
   padding: 0 5px;
 }
 
@@ -243,6 +251,83 @@ export default {
 
 /*960px*/
 @media (max-width : 60em) {
+
+  .column {
+    width: 760px;
+  }
+
+  .sidebar .stats {
+    padding-left: 15px;
+  }
+
+}
+
+/*800px*/
+@media (max-width : 50em) {
+
+  .column, .main {
+    width: 496px;
+    display: block;
+  }
+
+  .activity .peer:not(:nth-child(3)) {
+    display: none;
+  }
+
+  .sidebar {
+    position: absolute;
+    right: 0px;
+    width: 180px;
+  }
+
+}
+
+/*544px*/
+@media (max-width : 34em) {
+
+  .column, .main {
+    width: 320px;
+  }
+
+  .main .header {
+    min-height: 72px;
+  }
+
+  .main {
+    padding-bottom: 28px;
+  }
+
+  .main .activity {
+    height: 132px;
+  }
+
+  .activity .author {
+    display: none;
+  }
+
+  .activity>* {
+    width: 76px;
+  }
+
+  .activity .counter {
+    margin: 0;
+    background: rgb(236,236,236);
+    background-clip: content-box;
+    padding: 1px 0 0 0;
+  }
+
+  .activity .peer {
+    padding: 1px 0 0 0;
+    margin-left: 1px;
+  }
+
+  .sidebar {
+    width: 160px;
+  }
+
+  .sidebar .stats {
+    min-height: 132px;
+  }
 
 }
 
