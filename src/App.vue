@@ -1,15 +1,21 @@
 <template>
   <div>
-    <allQuestions></allQuestions>
+    <!-- <allQuestions></allQuestions> -->
+    <singleQuestion></singleQuestion>
+    <!-- <profile></profile> -->
   </div>
 </template>
 
 <script>
-import allQuestions from './components/allQuestions.vue';
+import allQuestions from './components/allQuestionsPage.vue';
+import singleQuestion from './components/singleQuestionPage.vue';
+import profile from './components/profile.vue';
 
 export default {
   components: {
-    'allQuestions': allQuestions
+    'allQuestions': allQuestions,
+    'singleQuestion': singleQuestion,
+    'profile': profile,
   },
   data () {
     return {
