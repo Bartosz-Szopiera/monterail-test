@@ -1,5 +1,7 @@
 # monterail-test
 
+<em>I will provide link to hosted project as soon as I will prepare working build.</em>
+
 Stack:
 vanilla HTML
 vanilla CSS
