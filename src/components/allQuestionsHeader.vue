@@ -27,9 +27,9 @@
             <span class="hot">hot</span>
           </div>
 
-          <input class="queryField" type="text" placeholder="Search questions">
+          <input v-model="search" class="queryField" type="text" placeholder="Search questions">
 
-          <button class="searchButton">SEARCH</button>
+          <button @click="listenSearch()" class="searchButton">SEARCH</button>
         </div>
 
       </div>
@@ -38,7 +38,19 @@
 </template>
 
 <script>
+import bus from '../main.js';
+
 export default {
+  data() {
+    return {
+      search: ''
+    }
+  },
+  methods : {
+    listenSearch() {
+      bus.$emit('search', this.search);
+    }
+  }
 }
 </script>
 

@@ -10,39 +10,33 @@
           </div>
           <div class="content">
             <div class="meta">
-              <span class="author blue">Eva</span>
+              <span class="author blue">{{ answer.author }}</span>
               <span class="grey upCase">commented it</span>
               <span class="grey">&#8226;</span>
               <span class="time italic">yesterday</span>
             </div>
-            <div class="text">All my patients with diabete should see an opthalmologist yearly for a dilated eye examination- begining at diagnosis in people with type 2 diabetes, and after 5 years in people with type 1 diabetes after puberty. Patients with known eye disease, symptoms of blurred vision in one eye, or blind spoth may need to see their opthalmologist more frequently.</div>
+            <div class="text">{{ answer.content }}</div>
           </div>
         </div>
-
-        <!-- <div class="reply">
-          <button class="box normal">
-            <span class="actionCall upCase">Comment</span>
-          </button>
-        </div> -->
 
       </div>
 
       <div class="sidebar">
         <div class="votes">
           <p>
-            <span class="number">19</span>
+            <span class="number">{{ answer.votes }}</span>
             <span class="italic"> upvotes</span>
           </p>
           <div class="buttons">
-            <button class="upvote arrowUp blue"></button>
-            <button class="downvote arrowDown blue"></button>
+            <button @click="vote(1, path)" class="upvote arrowUp blue"></button>
+            <button @click="vote(-1, path)" class="downvote arrowDown blue"></button>
           </div>
         </div>
       </div>
 
     </div>
 
-    <div class="reply">
+    <div v-if="!commented" class="reply">
       <button class="box normal">
         <span class="actionCall upCase">Comment</span>
       </button>
@@ -52,7 +46,11 @@
 </template>
 
 <script>
+import voteMixin from '../mixins/voteMixin';
+
 export default {
+  props: ['answer','path','commented'],
+  mixins: [voteMixin],
 }
 </script>
 

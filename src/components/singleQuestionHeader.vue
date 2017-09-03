@@ -3,6 +3,10 @@
     <div class="headerWrapper">
       <div class="column">
 
+        <router-link to="/">
+          <button class="goBack"></button>
+        </router-link>
+
         <div class="wrap">
           <h1>QUESTIONS</h1>
           <button class="addQuestion"></button>
@@ -20,6 +24,8 @@
 
 <script>
 export default {
+  methods: {
+  }
 }
 </script>
 
@@ -47,6 +53,27 @@ export default {
   max-width: 800px;
   margin: 45px auto 15px auto;
   height: 55px;
+}
+
+.goBack {
+  border: 1px solid #a7a9ac;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background: white;
+  line-height: 0;
+  color: #a7a9ac;
+  font-size: 2em;
+  font-family: courier;
+  font-weight: lighter;
+  position: absolute;
+  left: -60px;
+}
+
+.goBack::after {
+  content: '<';
+  position: relative;
+  top: 1px;
 }
 
 .wrap {

@@ -34,7 +34,7 @@
 
       </div>
 
-      <button id="close"></button>
+      <button id="close" @click="$emit('close')"></button>
 
       <div class="main">
         <origin></origin>
@@ -66,7 +66,7 @@ export default {
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 2;
     background: rgba(0,0,0,0.4);
   }
 

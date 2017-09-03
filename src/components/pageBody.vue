@@ -1,17 +1,10 @@
 <template lang="html">
-  <!-- <div class="background">
-    <div class="wrapper">
-      <slot>
-        <h1>fallback content</h1>
-      </slot>
-    </div>
-  </div> -->
   <div>
     <div class="background">
     </div>
     <div class="wrapper">
       <slot>
-        <h1>fallback content</h1>
+        <!-- <h1>fallback content</h1> -->
       </slot>
     </div>
   </div>

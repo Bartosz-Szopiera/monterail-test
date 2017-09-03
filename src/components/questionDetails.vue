@@ -10,20 +10,18 @@
           </div>
           <div class="description">
             <div class="action">
-              <span class="author blue">Eva</span>
+              <span class="author blue">{{ question.author }}</span>
               <span class="grey upCase">is asking
               </span>
               <span class="grey">:</span>
             </div>
-            <div class="subject blue italic">Will insuline make my patient gain weight?</div>
+            <div class="subject blue italic">{{ question.title }}</div>
           </div>
         </div>
 
         <div class="body">
           <div class="textBox">
-            <p class="text">
-              All my patients with diabete should see an opthalmologist yearly for a dilated eye examination- begining at diagnosis in people with type 2 diabetes, and after 5 years in people with type 1 diabetes after puberty. Patients with known eye disease, symptoms of blurred vision in one eye, or blind spoth may need to see their opthalmologist more frequently.
-            </p>
+            <p class="text">{{ question.content }}</p>
           </div>
         </div>
 
@@ -41,12 +39,12 @@
         </div>
         <div class="votes">
           <p>
-            <span class="number">19</span>
+            <span class="number">{{ question.votes }}</span>
             <span class="italic"> upvotes</span>
           </p>
           <div class="buttons">
-            <button class="upvote arrowUp blue"></button>
-            <button class="downvote arrowDown blue"></button>
+            <button @click="vote(1, path)" class="upvote arrowUp blue"></button>
+            <button @click="vote(-1, path)" class="downvote arrowDown blue"></button>
           </div>
         </div>
       </div>
@@ -54,19 +52,27 @@
     </div>
 
     <div class="response">
-      <p class="answered italic">
-        <span class="number normal">2</span>
+      <p v-if="replies > 0" class="answered italic">
+        <span class="number normal">{{ replies }}</span>
         <span>peers already answered </span>
-        <span class="user">Eva</span>
+        <span class="user">{{ question.author }}</span>
       </p>
-      <!-- <p class="noAnswers">Be the first one to answer</p> -->
+      <p v-else-if="replies === 0"class="noAnswers">Be the first one to answer</p>
     </div>
 
   </div>
 </template>
 
 <script>
+import voteMixin from '../mixins/voteMixin';
+
 export default {
+  props: ['question', 'path', 'replies'],
+  data() {
+    return {
+    }
+  },
+  mixins: [voteMixin],
 }
 </script>
 

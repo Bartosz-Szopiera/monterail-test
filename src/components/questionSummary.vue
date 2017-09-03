@@ -4,15 +4,17 @@
     <div class="main">
 
       <div class="header">
-        <div class="author avatar"><div></div></div>
+        <div class="author avatar"><div @click="listenAvatar()"></div></div>
         <div class="description">
           <div class="action">
-            <span class="author blue">Eva</span>
+            <span @click="listenAvatar()" class="author blue">{{ question.author }}</span>
             <span class="did grey upCase">is asking</span>
             <span class="adjective grey upCase"></span>
             <span class="source grey upCase"></span>
           </div>
-          <div class="subject blue italic">Will insulin make my patient gain weight?</div>
+          <div class="subject blue italic"><router-link v-bind:to="'/question/' + question.id">{{ question.title }}</router-link></div>
+          <!-- <div class="subject blue italic"><router-link to="/question/">{{ question.title }}</router-link></div> -->
+          <!-- <div class="subject blue italic">{{ question.title }}</div> -->
         </div>
       </div>
 
@@ -56,7 +58,26 @@
 </template>
 
 <script>
+import bus from '../main.js';
+
 export default {
+  props: ['question'],
+  data() {
+    return {
+      id: '',
+      author: '',
+      title: '',
+      peers: [],
+      related: 0,  // related discussions
+      answers: 0,  // conversations
+      comments: 0 // total number of comments
+    }
+  },
+  methods : {
+    listenAvatar() {
+      bus.$emit('showModal');
+    }
+  },
 }
 </script>
 
@@ -123,8 +144,18 @@ export default {
   width: 100%;
 }
 
+.header .description .action .author:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .header .description .subject {
   font-size: 1.2em;
+}
+
+.header .description .subject:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .activity {
