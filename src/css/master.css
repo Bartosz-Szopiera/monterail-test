@@ -17,8 +17,13 @@ button {
   outline: none;
 }
 
+*:link, *:visited, *:active  {
+  text-decoration: none;
+  color: inherit;
+}
+
 button:hover,
-.avatar:hover {
+.avatar>div:hover {
   cursor: pointer;
 }
 
