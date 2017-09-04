@@ -1,10 +1,27 @@
 # monterail-test
 
-Stack:
+## Description ###
+
+This limited excerpt of an social-media app was created
+as a recruitment task for [Monterail](https://www.monterail.com/) company
+according to the design they provided me with.
+It features 3 views and has very minor functionalities.
+
+## To launch app locally: ##
+
+1. `git clone https://github.com/bart5/monterail-test.git`  
+2. `npm install`  
+To use webpack dev server (8080 by default):  
+2.a `npm run dev`  
+To get apache-friendly build:  
+2.b `npm run build`  
+
+## Stack: ##
 - vanilla HTML
 - vanilla CSS
 - Vue.js
 
+#### Why Vue? ####
 I was never using any framework before, but decided to try
 to learn some while working on the assignment.
 At the time I was somewhat familiar with React before starting
@@ -21,6 +38,7 @@ BSD + patents license, not that it would concern me, and not
 that it is a valid reason to bail on React, but that info just
 swayed my judgment in such way.
 
+#### Other ####
 Together with Vue I was using couple of tools:
 - vue-cli for automatic setup of environment (with webpack
   and babel which I know nothing about except their general
@@ -32,12 +50,8 @@ I am using vanilla CSS despite I enjoy using SCSS as
 I though it could be additional layer of complexity when
 learning a framework.
 
-*Assumptions*
-- First level comment in single-question view is actually
-  an answer (despite user action is described as "commented
-  it").
+## Roughly what I did ##
 
-*What I did*
 - All layouts are ready and all are responsive (however
   I had not tested on mobile devices). Admittedly couple
   of views poorly utilize screen real-estate in mobile views,
@@ -69,38 +83,43 @@ learning a framework.
 - Routing works so that you can select any question and go
   to the `singleQuestionPage` and come back.
 
-\*I was finishing the project at the last moment before
+*I was finishing the project at the last moment before
 the deadline, so I just gave up on polishing and really
 without much thought I just tried to implement varied
 range of features which I felt were helping me to learn
-something about Vue.
+something about Vue.*
+
+## What next? ##
 
 Currently I cannot showcase effect of my work in other
-way than with source code. I have trouble with preparing
-working build and hosting it. As soon as I will get it
-in order I will provide link to working "app".
-Because I have no working build I cannot test views on mobile.
+way than with source code. I have trouble with successfully
+rendering my build on firebase or my own website, despite
+the build working well on my local apache server.
+As soon as I will get it in order I will provide link to
+working "app". It will also allow me to test RWD on a mobile.
 
 I would like to go back to this project and add some
 polishing to make it look as more complete. As soon
 as I will figure-out the problem with the build, I will
 try to change/add the following:
-- Load only limited number of question from Firebase
+- [ ] Load only limited number of question from Firebase
   and display all on the all-question view.
-- Load only limited number of questions from JSON to the
+- [ ] Load only limited number of questions from JSON to the
   all-question view.
-- Add button to load more questions.
-- Add timestamp to each question for sorting.
-- Add method to read certain data from question and
+- [ ] Add button to load more questions.
+- [ ] Add timestamp to each question for sorting.
+- [ ] Add method to read certain data from question and
   display it in the `questionSummary` component
   (the single question "tile" in all-questions vie)
     - peers involved
     - total number of activities (answers + comments)
-- Fix titles of questions to accommodate better to long
+- [ ] Fix titles of questions to accommodate better to long
   chunks of text (however with some limit).
-- Add 'link' to profile modal to each user avatar and name
+- [ ] Add 'link' to profile modal to each user avatar and name
   except from avatar in modal itself.
+- [ ] Anchor page's header (fixed position).
+- [ ] Disable viewport scroll while profile modal is visible.
 
 More probably will come to mind during work. Despite it
-was simply recruitment task, I would like to make it look
-like a more finished piece of work.
+was simply recruitment task, it was fun to build and I would like
+to make it look like a more finished piece of work.
