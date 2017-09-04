@@ -8,8 +8,9 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 
 const router = new VueRouter({
+  // base: process.env.NODE_ENV === 'development' ? '/' : '/monterail-test/',
   routes,
-  mode: 'history'
+  // mode: 'history'
 });
 
 const bus = new Vue();
@@ -18,6 +19,6 @@ export default bus;
 
 new Vue({
   el: '#app',
-  render: h => h(App),
-  router
+  router,
+  render: h => h(App)
 })

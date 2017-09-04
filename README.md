@@ -1,4 +1,4 @@
-# monterail-test
+# [monterail-test](http://testserver.pl/monterail-test/)
 
 ## Description ###
 
@@ -91,12 +91,12 @@ something about Vue.*
 
 ## What next? ##
 
-Currently I cannot showcase effect of my work in other
+~~Currently I cannot showcase effect of my work in other
 way than with source code. I have trouble with successfully
 rendering my build on firebase or my own website, despite
 the build working well on my local apache server.
 As soon as I will get it in order I will provide link to
-working "app". It will also allow me to test RWD on a mobile.
+working "app". It will also allow me to test RWD on a mobile.~~
 
 I would like to go back to this project and add some
 polishing to make it look as more complete. As soon
