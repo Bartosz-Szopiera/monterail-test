@@ -98,10 +98,9 @@ the build working well on my local apache server.
 As soon as I will get it in order I will provide link to
 working "app". It will also allow me to test RWD on a mobile.~~
 
-I would like to go back to this project and add some
-polishing to make it look as more complete. As soon
-as I will figure-out the problem with the build, I will
-try to change/add the following:
+I would like to make it look like more finished piece of work
+so in the coming days I will try to introduce following
+changes:
 - [ ] Load only limited number of question from Firebase
   and display all on the all-question view.
 - [ ] Load only limited number of questions from JSON to the
@@ -119,7 +118,3 @@ try to change/add the following:
   except from avatar in modal itself.
 - [ ] Anchor page's header (fixed position).
 - [ ] Disable viewport scroll while profile modal is visible.
-
-More probably will come to mind during work. Despite it
-was simply recruitment task, it was fun to build and I would like
-to make it look like a more finished piece of work.
