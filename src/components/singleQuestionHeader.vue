@@ -1,11 +1,14 @@
 <template lang="html">
   <div class="headerBackground">
     <div class="headerWrapper">
-      <div class="column">
 
+      <div class="buttonWrapper">
         <router-link to="/">
           <button class="goBack"></button>
         </router-link>
+      </div>
+
+      <div class="column">
 
         <div class="wrap">
           <h1>QUESTIONS</h1>
@@ -42,7 +45,8 @@ export default {
 }
 
 .headerWrapper {
-  width: 100vw;
+  /*width: 100vw;*/
+  width: 100%;
   flex: 0 0 auto;
   box-shadow: 0 0px 3px 0 #CCC;
 }
@@ -53,6 +57,18 @@ export default {
   max-width: 800px;
   margin: 45px auto 15px auto;
   height: 55px;
+}
+
+.buttonWrapper {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50px;
+  width: 90%;
+  height: 0;
+  max-width: 1100px;
+  transform: translate(-50%,0);
+  z-index: 1;
 }
 
 .goBack {
@@ -66,8 +82,6 @@ export default {
   font-size: 2em;
   font-family: courier;
   font-weight: lighter;
-  position: absolute;
-  left: -60px;
 }
 
 .goBack::after {
@@ -118,6 +132,10 @@ h1 {
   float: right;
 }
 
+.activity p {
+  margin: 10px 0;
+}
+
 .activity .number {
   padding: 0 8px;
 }
@@ -128,8 +146,17 @@ h1 {
 /*960px*/
 @media (max-width : 60em) {
 
+  .buttonWrapper {
+    width: 760px;
+    padding: 0 22px;
+  }
+
   .column {
     width: 760px;
+  }
+
+  .column .wrap {
+    margin-left: 90px;
   }
 
 }
@@ -137,8 +164,14 @@ h1 {
 /*800px*/
 @media (max-width : 50em) {
 
-  .column, .main {
-    width: 496px;
+  .buttonWrapper {
+    width: 100%;
+    padding: 0 22px;
+    top: 25px;
+  }
+
+  .column {
+    width: 100%;
     display: block;
   }
 
@@ -147,16 +180,8 @@ h1 {
     height: 75px;
   }
 
-  .controlls .dataset {
-    flex: 1 1 auto;
-    order: 2;
-    width: auto;
-    justify-content: space-around;
-  }
-
-  .controlls .searchButton {
-    flex: 2 0 auto;
-    order: 3;
+  .activity {
+    padding-right: 20px;
   }
 
 }
@@ -165,12 +190,29 @@ h1 {
 /*544px*/
 @media (max-width : 34em) {
 
-  .column, .main {
-    width: 320px;
+  .buttonWrapper {
+    top: 10px;
+    padding: 0 15px;
+  }
+
+  .column {
+    margin: 10px auto;
+    height: 35px;
+  }
+
+  .column .wrap {
+    width: 100%;
+    padding-left: 65px;
+    margin: 0;
+    justify-content: space-between;
   }
 
   .column .wrap h1 {
     font-size: 1.5em;
+  }
+
+  .activity {
+    display: none;
   }
 
 }
