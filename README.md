@@ -24,19 +24,20 @@ To get apache-friendly build:
 #### Why Vue? ####
 I was never using any framework before, but decided to try
 to learn some while working on the assignment.
-At the time I was somewhat familiar with React before starting
-this project since I did a short course on <i>codeacademy</i>.
-However after short research I figured Vue is regarded even
+At the time I was starting this project I was somewhat familiar
+with React thanks to short course on a <i>codeacademy</i>.
+However after some research I figured Vue is regarded even
 simpler than React - yet with very competitive capabilities -
-and seems to gain traction among developers. Angular was not
-an option, as I have seen it as an overkill to learn to build
-something with it in just 2 weeks. It also looked as a poor
-choice for a first framework, because I suppose it would
-make me lost with angular-way for everything.
-I finally leaned towards Vue after reading about Facebook
-BSD + patents license, not that it would concern me, and not
-that it is a valid reason to bail on React, but that info just
-swayed my judgment in such way.
+and seems to be gaining traction among developers. Angular was
+not an option, as I have seen it as an overkill to learn to build
+something with it in just 2 weeks. It looked as a poor choice
+for a first framework, since I suspect it would get me lost
+with it's own angular-way for everything.
+Being torn between React and Vue I finally leaned towards the latter
+after reading about Facebook BSD + patents license; not that it
+would concern me, and not that it is a valid reason to bail on React
+for any developer, but that info just swayed my judgment in
+a subjective way.
 
 #### Other ####
 Together with Vue I was using couple of tools:
@@ -88,6 +89,24 @@ the deadline, so I just gave up on polishing and really
 without much thought I just tried to implement varied
 range of features which I felt were helping me to learn
 something about Vue.*
+
+## After-thought ##
+
+Having finished the first, rough, unpolished version
+I have couple of remarks about my execution:
+* Coding layout having finished design at disposal is very neat.
+* Adjusting fonts to design fonts while not having the source
+  and not knowing where what actual font size and style
+  was used is a pain (I knew the type of font used
+  but could not google it, probably should just ask for it..).
+* Not using Sass was a mistake. There was way more
+  CSS than I expected and not being able to store
+  values in variables, extend classes and nest from time to time
+  was a bad experience.
+* `questionSummary` and `allQuestionsHeader` are in part
+  coded in a not very elegant way, rather hacky.
+* It seams inefficient that I perform XHR each time the two
+  of main views are being rendered.
 
 ## What next? ##
 
