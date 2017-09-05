@@ -16,6 +16,14 @@
               <span class="grey">:</span>
             </div>
             <div class="subject blue italic">{{ question.title }}</div>
+
+
+          </div>
+
+          <div class="sidebar">
+            <div class="header">
+              <button class="follow blue">unfollow</button>
+            </div>
           </div>
         </div>
 
@@ -23,6 +31,20 @@
           <div class="textBox">
             <p class="text">{{ question.content }}</p>
           </div>
+
+          <div class="sidebar">
+            <div class="votes">
+              <p>
+                <span class="number">{{ question.votes }}</span>
+                <span class="italic"> upvotes</span>
+              </p>
+              <div class="buttons">
+                <button @click="vote(1, path)" class="upvote arrowUp blue"></button>
+                <button @click="vote(-1, path)" class="downvote arrowDown blue"></button>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div class="reply">
@@ -33,7 +55,7 @@
 
       </div>
 
-      <div class="sidebar">
+      <div class="sidebar mobile">
         <div class="header">
           <button class="follow blue">unfollow</button>
         </div>
@@ -89,16 +111,14 @@ export default {
 }
 
 .main {
-  flex: 1 1 auto;
-  width: 600px;
-  max-width: 600px;
-  min-width: 600px;
+  flex: 0 0 auto;
+  width: 100%;
   background: rgb(223,243,253);
 }
 
 .main .header {
   display: flex;
-  height: 90px;
+  min-height: 90px;
   background: rgb(223,243,253);
 }
 
@@ -118,8 +138,10 @@ export default {
 }
 
 .main .header .description {
+  flex: 1 1 auto;
+  width: 510px;
+  min-width: 510px;
   padding: 15px 15px;
-  width: 100%;
 }
 
 .main .header .description .author {
@@ -141,6 +163,7 @@ export default {
   color: #888;
   background: white;
   margin-left: 90px;
+  flex-flow: row nowrap;
 }
 
 .main .body .author {
@@ -151,7 +174,9 @@ export default {
 }
 
 .main .body .textBox {
-  width: 100%;
+  flex: 0 1 auto;
+  width: 510px;
+  min-width: 510px;
 }
 
 .main .body .textBox p {
@@ -202,6 +227,15 @@ export default {
   top: -50%;
 }
 
+.sidebar.mobile {
+  display: none;
+  flex-flow: row nowrap;
+}
+
+.sidebar.mobile .header {
+  flex: 0 0 auto;
+}
+
 .sidebar {
   flex: 1 1 auto;
   background: white;
@@ -211,10 +245,11 @@ export default {
 }
 
 .sidebar .header {
-  flex: 0 0 auto;
-  height: 90px;
+  flex: 1 1 auto;
+  /*height: 90px;*/
   background: rgb(223,243,253);
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -285,16 +320,19 @@ export default {
     width: 100%;
   }
 
-  .main {
+  .column .main .header .description {
     min-width: unset;
-    max-width: unset;
-    border-right: 180px solid white;
+    width: auto;
+    padding: 10px 15px;
+  }
+
+  .column .main .body .textBox {
+    min-width: unset;
   }
 
   .sidebar {
-    position: absolute;
     right: 0px;
-    width: 180px;
+    min-width: 180px;
   }
 
 }
@@ -302,12 +340,8 @@ export default {
 /*656px*/
 @media (max-width:41em) {
 
-  .main {
-    border-right: 140px solid white;
-  }
-
   .sidebar {
-    width: 140px;
+    min-width: 140px;
   }
 
 }
@@ -315,12 +349,8 @@ export default {
 /*544px*/
 @media (max-width : 34em) {
 
-  .main {
-    border: none;
-  }
-
-  .main .body {
-    margin-left: 0;
+  .main .header {
+    display: block;
   }
 
   .main .header .author.avatarBox {
@@ -338,30 +368,39 @@ export default {
 
   .main .header .description .action {
     position: relative;
-  }
-
-  .main .header .description .action {
-    padding-left: 50px;
+    padding: 5px 0 15px 50px;
   }
 
   .main .header .description .subject {
-    position: absolute;
-    height: 40px;
     padding: 8px 0 8px 15px;
-    border-top: 2px solid white;
-    left: 0;
-    right: 0;
-    bottom: 0;
     font-size: 1.1em;
+    position: relative;
   }
 
   .main .header .description .subject::before {
-    /*display: '';*/
+    content: '';
+    display: block;
+    position: absolute;
+    border-top: 1px solid white;
+    width: 150%;
+    top: 0;
+    left: -5%;
+  }
 
+  .main .body {
+    margin-left: 0;
   }
 
   .main .body .textBox p {
     padding-bottom: 0;
+  }
+
+  .sidebar.mobile {
+    display: flex;
+  }
+
+  .sidebar:not(.mobile) {
+    display: none;
   }
 
   .sidebar {
@@ -378,6 +417,7 @@ export default {
 
   .sidebar .votes {
     width: 50%;
+    height: auto;
   }
 
 }
