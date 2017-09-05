@@ -25,7 +25,7 @@ export default {
 .background {
   margin: 0 auto;
   width: 90%;
-  max-width: 900px;
+  max-width: 1100px;
   min-width: 760px;
   display: flex;
   justify-content: center;
