@@ -22,7 +22,7 @@ export default {
   components: {
     'questionSummary':  questionSummary,
     'app-header':       header,
-    'pageBody':          pageBody,
+    'pageBody':         pageBody,
   },
   data() {
     return {
@@ -31,10 +31,13 @@ export default {
     }
   },
   created() {
+    // Request data
     const url = 'https://monterail-123.firebaseio.com/questions.json';
     this.$http.get(url).then(function(data){
       return data.json()
     }).then(function(data){
+      // Put each question into `questions` array
+      // and assign it an id equal to the 'key'.
       for (let key in data) {
         data[key].id = key,
         this.questions.push(data[key]);
@@ -43,11 +46,15 @@ export default {
     this.filteredQuestions = this.questions;
   },
   mounted() {
+    // Start listening 'search' event on 'bus' instance
     bus.$on('search', (searchTerm) => {
+      // 'Un-filter' questions if query is empty
       if (searchTerm === '') {
         this.filteredQuestions = this.questions;
       }
 
+      // Perform case-insensitive search of the query
+      // within question's titles
       this.filteredQuestions =
         this.questions.filter((question) => {
         return  (
@@ -55,7 +62,6 @@ export default {
           .match(searchTerm.toLowerCase())
           )
         });
-
     });
   },
 }
