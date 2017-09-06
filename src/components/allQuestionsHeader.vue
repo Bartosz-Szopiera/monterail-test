@@ -1,23 +1,41 @@
 <template lang="html">
   <div class="headerBackground">
     <div class="headerWrapper">
-      <div class="column">
+
+      <div class="buttonWrapper">
+        <router-link to="">
+          <button class="goBack"></button>
+        </router-link>
+      </div>
+
+      <div class="menuButton" @click="searchOptions = !searchOptions"></div>
+
+      <div class="column" :class="{searchOptions}">
 
         <div class="wrap">
           <h1>QUESTIONS</h1>
           <button class="addQuestion"></button>
         </div>
 
-        <div class="controlls questionFilter">
+        <div class="controls questionFilter">
           <div class="dataset">
             <label class="userShelf">
-              <input type="radio" name="mode" value="shelf">
+              <input type="radio" checked name="mode" value="shelf">
               My shelf
             </label>
             <label class="allQuestions">
               <input type="radio" name="mode" value="all">
               All questions
             </label>
+          </div>
+
+          <div class="dataset mobile italic">
+              <div class="selectWrap">
+                <select class="normal grey" name="">
+                  <option value="shelf">My shelf</option>
+                  <option value="all">All questions</option>
+                </select>
+              </div>
           </div>
 
           <div class="sortBy">
@@ -43,7 +61,8 @@ import bus from '../main.js';
 export default {
   data() {
     return {
-      search: ''
+      search: '',
+      searchOptions: false
     }
   },
   methods : {
@@ -67,7 +86,7 @@ export default {
 }
 
 .headerWrapper {
-  width: 100vw;
+  width: 100%;
   flex: 0 0 auto;
   box-shadow: 0 0px 3px 0 #CCC;
 }
@@ -78,6 +97,60 @@ export default {
   max-width: 800px;
   margin: 45px auto 15px auto;
   height: 95px;
+}
+
+.buttonWrapper {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50px;
+  width: 90%;
+  height: 0;
+  max-width: 1100px;
+  transform: translate(-50%,0);
+  z-index: 1;
+}
+
+.goBack {
+  border: 1px solid #a7a9ac;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background: white;
+  line-height: 0;
+  color: #a7a9ac;
+  font-size: 2em;
+  font-family: courier;
+  font-weight: lighter;
+}
+
+.goBack::after {
+  content: '<';
+  position: relative;
+  top: 1px;
+}
+
+.menuButton {
+  position: absolute;
+  display: none;
+  margin: 15px 5px;
+  top: 0;
+  right: 0;
+  width: 35px;
+  padding: 8px 0;
+  border: 2px solid #CCC;
+  border-left: none;
+  border-right: none;
+  background: none;
+  z-index: 1;
+}
+
+.menuButton::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 0;
+  border-top: 2px solid #CCC;
 }
 
 .wrap {
@@ -118,23 +191,23 @@ h1 {
   height: 20px;
 }
 
-.controlls {
+.controls {
   top: 0px;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
   flex-flow: row wrap;
 }
 
-.controlls label {
+.controls label {
   margin-left: 15px;
   display: flex;
   align-items: center;
 }
 
-.controlls input[type="radio"] {
+.controls input[type="radio"] {
   margin: 0 5px;
   -webkit-appearance: none;
   background: white;
@@ -147,7 +220,7 @@ h1 {
   background: none;
 }
 
-.controlls input[type="radio"]:checked {
+.controls input[type="radio"]:checked {
   background: black;
   background-clip: content-box;
 }
@@ -157,6 +230,54 @@ h1 {
   flex: 0 1 auto;
   display: flex;
   justify-content: flex-end;
+  padding: 10px 0;
+}
+
+.dataset.mobile {
+  display: none;
+  padding: 0;
+  background: #fbfbfb;
+  flex: 1 1 auto;
+}
+
+.dataset.mobile .selectWrap {
+  display: inline-block;
+  width: 100%;
+}
+
+.dataset.mobile .selectWrap select {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0 25px 0 10px;
+  -webkit-appearance: none;
+  font-size: 1em;
+  background: none;
+  border: 1px solid #EEE;
+  height: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.dataset.mobile .selectWrap select:hover {
+  cursor: pointer;
+}
+
+.dataset.mobile .selectWrap {
+  position: relative;
+}
+
+.dataset.mobile .selectWrap::after {
+  content: '';
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  display: block;
+  border: 8px solid transparent;
+  border-top-color: #CCC;
+  height: 0;
+  width: 0;
+  z-index: 0;
 }
 
 .sortBy {
@@ -165,6 +286,7 @@ h1 {
   margin: 0 0 0 10px;
   text-align: right;
   word-spacing: 0.15em;
+  padding: 10px 0;
 }
 
 .sortBy .recent, .sortBy .hot {
@@ -181,8 +303,9 @@ h1 {
 }
 
 .queryField {
-  width: 600px;
-  flex: 0 1 auto;
+  max-width: 600px;
+  min-width: 600px;
+  flex: 1 1 auto;
   height: 30px;
   padding: 0 0 0 15px;
   margin: 0;
@@ -212,8 +335,17 @@ h1 {
 /*960px*/
 @media (max-width : 60em) {
 
+  .buttonWrapper {
+    width: 760px;
+    padding: 0 22px;
+  }
+
   .column {
     width: 760px;
+  }
+
+  .column .wrap {
+    padding-left: 90px;
   }
 
 }
@@ -221,41 +353,131 @@ h1 {
 /*800px*/
 @media (max-width : 50em) {
 
-  .column, .main {
-    width: 496px;
-    display: block;
+  .buttonWrapper {
+    width: 100%;
+    padding: 0 22px;
+    top: 25px;
   }
 
   .column {
+    width: 100%;
+    display: block;
     margin-top: 25px;
     margin-bottom: 5px;
     height: 125px;
   }
 
-  .controlls .dataset {
-    flex: 1 1 auto;
-    order: 2;
-    width: auto;
-    justify-content: space-around;
+  .controls>* {
+    margin: 0 10px;
   }
 
-  .controlls .searchButton {
-    flex: 2 0 auto;
+  .controls .queryField {
+    min-width: unset;
+    max-width: unset;
+    width: 60%;
+  }
+
+  .controls .searchButton {
+    max-width: 150px;
+    min-width: 150px;
+  }
+
+  .controls .dataset {
+    width: auto;
+  }
+
+  .controls .sortBy {
+    max-width: 150px;
+  }
+
+}
+
+/*720px*/
+@media (max-width : 45em) {
+
+  .controls .dataset:not(.mobile) {
+    display: none;
+  }
+
+  .controls .dataset.mobile {
+    display: block;
+    order: 2;
+  }
+
+  .controls .sortBy {
+    width: 100%;
+    max-width: unset;
+  }
+
+  .controls .queryField {
+    width: auto;
+  }
+
+  .controls .searchButton {
     order: 3;
   }
 
 }
 
-
 /*544px*/
 @media (max-width : 34em) {
 
-  .column, .main {
-    width: 320px;
+  .buttonWrapper {
+    top: 10px;
+    padding: 0 15px;
+  }
+
+  .menuButton {
+    display: block;
+  }
+
+  .column {
+    margin: 10px auto;
+    height: 35px;
+    /*height: auto;*/
+  }
+
+  .column.searchOptions {
+    height: auto;
+  }
+
+  .column:not(.searchOptions) .controls {
+    display: none;
+  }
+
+  .column .wrap {
+    padding-left: 65px;
   }
 
   .column .wrap h1 {
     font-size: 1.5em;
+  }
+
+
+  .controls {
+    padding-top: 35px;
+  }
+
+  .controls .sortBy {
+    padding: 5px 0;
+  }
+
+  .controls .queryField {
+    width: 100%;
+  }
+
+  .controls .dataset {
+    width: 40%;
+    max-width: 50%;
+  }
+
+  .controls>* {
+    margin: 5px 10px;
+  }
+
+  .controls .searchButton {
+    max-width: 50%;
+    min-width: 40%;
   }
 
 }
