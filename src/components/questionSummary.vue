@@ -13,40 +13,28 @@
             <span class="source grey upCase"></span>
           </div>
           <div class="subject blue italic"><router-link v-bind:to="'/question/' + question.id">{{ question.title }}</router-link></div>
-          <!-- <div class="subject blue italic"><router-link to="/question/">{{ question.title }}</router-link></div> -->
-          <!-- <div class="subject blue italic">{{ question.title }}</div> -->
         </div>
       </div>
 
-      <div class="activity">
-        <div class="author">
-          <div class="actionType grey upCase">asked</div>
-        </div>
-        <div class="counter">
-          <div class="number">3</div>
-          <p class="italic">more activities</p>
-        </div>
-        <div class="peer">
-          <div class="avatar"></div>
-          <div class="actionType">commented</div>
-        </div>
-        <div class="peer">
-          <div class="avatar"></div>
-          <div class="actionType">commented</div>
-        </div>
-        <div class="peer">
-          <div class="avatar"></div>
-          <div class="actionType">commented</div>
-        </div>
-        <div class="peer">
-          <div class="avatar"></div>
-          <div class="actionType">commented</div>
+      <div class="wrapActivity">
+        <div ref="activity" class="activity">
+          <div ref="author" class="author">
+            <div class="actionType grey upCase">asked</div>
+          </div>
+          <div class="counter">
+            <div class="number">{{ totalActivities }}</div>
+            <p class="italic">total activities</p>
+          </div>
+          <div ref="peer" v-for="tile in this.tiles" class="peer">
+            <div class="avatar"></div>
+            <div class="actionType">{{ tile[0] }}</div>
+          </div>
         </div>
       </div>
 
     </div>
 
-    <div class="sidebar">
+    <div ref="sidebar" class="sidebar">
       <div class="stats">
         <p><span class="number normal">1</span><span class="italic"> related discussion</span></p>
         <p><span class="number normal">6</span><span class="italic"> peers involved</span></p>
@@ -64,13 +52,7 @@ export default {
   props: ['question'],
   data() {
     return {
-      id: '',
-      author: '',
-      title: '',
-      peers: [],
-      related: 0,  // related discussions
-      answers: 0,  // conversations
-      comments: 0 // total number of comments
+      actions: [],
     }
   },
   methods : {
@@ -78,6 +60,36 @@ export default {
       bus.$emit('showModal');
     }
   },
+  computed : {
+    totalActivities() {
+      // Organize answers and comments to the question
+      // into an array.
+
+      this.actions = [];
+
+      for (let id in this.question.answers) {
+        let answer = this.question.answers[id];
+        this.actions.push(['answered', answer.author, Math.random()]);
+        for (let id in answer.comments) {
+          let comment = answer.comments[id];
+          this.actions.push(['commented', comment.author, Math.random()]);
+        }
+      }
+
+      // Sort according to assigned random values
+      this.actions.sort((a,b) => a[2] - b[2]);
+
+      return this.actions.length
+    },
+    tiles() {
+      // Maximum number of tiles displayed on screen
+      // is always 4
+      let tilesToDraw = Math.min(this.totalActivities, 4);
+      return this.actions.slice(0,tilesToDraw)
+    }
+  },
+  mounted() {
+  }
 }
 </script>
 
@@ -94,7 +106,7 @@ export default {
 
 .main {
   flex: 0 0 auto;
-  padding-bottom: 38px;
+  padding-bottom: 20px;
   width: 600px;
 }
 
@@ -158,15 +170,25 @@ export default {
   text-decoration: underline;
 }
 
+.wrapActivity {
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+}
+
 .activity {
   display: flex;
-  height: 188px;
   color: #888;
+  max-width: 600px;
+  height: 1000px;
+  flex-flow: row wrap;
+  align-items: space-between;
 }
 
 .activity>* {
+  flex: 0 0 auto;
+  height: 188px;
   width: 90px;
-  height: 100%;
   padding-top: 32px;
   display: flex;
   justify-content: space-between;
@@ -301,9 +323,13 @@ export default {
     display: block;
   }
 
-  .activity .peer:not(:nth-child(3)) {
-    display: none;
+  .wrapActivity {
+    padding-right: 150px;
   }
+
+  /*.activity .peer:not(:nth-child(3)) {
+    display: none;
+  }*/
 
   .sidebar {
     position: absolute;
@@ -324,8 +350,16 @@ export default {
     padding-bottom: 28px;
   }
 
-  .main .activity {
+  .wrapActivity {
+    height: 140px;
+  }
+
+  .main .activity>* {
     height: 132px;
+  }
+
+  .wrapActivity {
+    padding-right: 120px;
   }
 
   .activity .author {
