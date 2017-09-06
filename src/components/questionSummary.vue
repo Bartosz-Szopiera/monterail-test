@@ -297,7 +297,7 @@ export default {
 @media (max-width : 50em) {
 
   .column, .main {
-    width: 496px;
+    width: 100%;
     display: block;
   }
 
@@ -308,17 +308,13 @@ export default {
   .sidebar {
     position: absolute;
     right: 0px;
-    width: 180px;
+    width: 150px;
   }
 
 }
 
 /*544px*/
 @media (max-width : 34em) {
-
-  .column, .main {
-    width: 320px;
-  }
 
   .main .header {
     min-height: 72px;
@@ -353,7 +349,7 @@ export default {
   }
 
   .sidebar {
-    width: 160px;
+    width: 130px;
   }
 
   .sidebar .stats {
