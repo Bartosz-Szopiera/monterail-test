@@ -20,11 +20,11 @@
         <div class="controls questionFilter">
           <div class="dataset">
             <label class="userShelf">
-              <input type="radio" checked name="mode" value="shelf">
+              <input type="radio" name="mode" value="shelf">
               My shelf
             </label>
             <label class="allQuestions">
-              <input type="radio" name="mode" value="all">
+              <input type="radio" checked name="mode" value="all">
               All questions
             </label>
           </div>
@@ -33,7 +33,7 @@
               <div class="selectWrap">
                 <select class="normal grey" name="">
                   <option value="shelf">My shelf</option>
-                  <option value="all">All questions</option>
+                  <option value="all" selected>All questions</option>
                 </select>
               </div>
           </div>
