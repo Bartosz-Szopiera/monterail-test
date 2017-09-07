@@ -6,11 +6,11 @@
 
         <div class="answer">
           <div class="author avatarBox">
-            <div class="avatar"></div>
+            <div @click="busEvent('showModal')" class="avatar"></div>
           </div>
           <div class="content">
             <div class="meta">
-              <span class="author blue">{{ comment.author }}</span>
+              <span @click="busEvent('showModal')" class="author blue userName">{{ comment.author }}</span>
               <span class="grey upCase">commented it</span>
               <span class="grey">&#8226;</span>
               <span class="time italic">yesterday</span>
@@ -48,9 +48,15 @@
 
 <script>
 import voteMixin from '../mixins/voteMixin';
+import bus from '../main.js';
 
 export default {
   props: ['comment', 'path', 'commented'],
+  methods : {
+    busEvent(eventName) {
+      bus.$emit(eventName);
+    }
+  },
   mixins: [voteMixin],
 }
 </script>

@@ -6,17 +6,15 @@
 
         <div class="header">
           <div class="author avatarBox">
-            <div class="avatar"></div>
+            <div @click="busEvent('showModal')" class="avatar"></div>
           </div>
           <div class="description">
             <div class="action">
-              <span class="author blue">{{ question.author }}</span>
+              <span @click="busEvent('showModal')" class="author blue userName">{{ question.author }}</span>
               <span class="grey upCase">is asking
               </span>
-              <span class="grey">:</span>
             </div>
             <div class="subject blue italic">{{ question.title }}</div>
-
 
           </div>
 
@@ -87,11 +85,17 @@
 
 <script>
 import voteMixin from '../mixins/voteMixin';
+import bus from '../main.js';
 
 export default {
   props: ['question', 'path', 'replies'],
   data() {
     return {
+    }
+  },
+  methods : {
+    busEvent(eventName) {
+      bus.$emit(eventName);
     }
   },
   mixins: [voteMixin],
@@ -160,7 +164,6 @@ export default {
 
 .main .body {
   display: flex;
-  color: #888;
   background: white;
   margin-left: 90px;
   flex-flow: row nowrap;
@@ -246,7 +249,6 @@ export default {
 
 .sidebar .header {
   flex: 1 1 auto;
-  /*height: 90px;*/
   background: rgb(223,243,253);
   display: flex;
   justify-content: center;

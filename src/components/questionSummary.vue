@@ -4,10 +4,10 @@
     <div class="main">
 
       <div class="header">
-        <div class="author avatar"><div @click="listenAvatar()"></div></div>
+        <div class="author avatarBox"><div @click="busEvent('showModal')" class="avatar"></div></div>
         <div class="description">
           <div class="action">
-            <span @click="listenAvatar()" class="author blue">{{ question.author }}</span>
+            <span @click="busEvent('showModal')" class="author blue userName">{{ question.author }}</span>
             <span class="did grey upCase">is asking</span>
             <span class="adjective grey upCase"></span>
             <span class="source grey upCase"></span>
@@ -26,7 +26,7 @@
             <p class="italic">total activities</p>
           </div>
           <div ref="peer" v-for="tile in this.tiles" class="peer">
-            <div class="avatar"></div>
+            <div @click="busEvent('showModal')" class="avatar"></div>
             <div class="actionType">{{ tile[0] }}</div>
           </div>
         </div>
@@ -56,8 +56,8 @@ export default {
     }
   },
   methods : {
-    listenAvatar() {
-      bus.$emit('showModal');
+    busEvent(eventName) {
+      bus.$emit(eventName);
     }
   },
   computed : {
@@ -136,14 +136,14 @@ export default {
   background: rgb(223,243,253);
 }
 
-.header .author.avatar {
+.header .author.avatarBox {
   width: 90px;
   display: flex;
   align-items: center;
   flex: 0 0 auto;
 }
 
-.header .author.avatar div {
+.header .author.avatarBox div {
   margin: 0 auto;
   width: 45px;
   height: 45px;
@@ -156,13 +156,17 @@ export default {
   width: 100%;
 }
 
-.header .description .action .author:hover {
-  cursor: pointer;
-  text-decoration: underline;
+.header .description .action .author {
+  padding-right: 5px;
+}
+
+.header .description .action .did {
+  font-size: 0.7em;
 }
 
 .header .description .subject {
   font-size: 1.2em;
+  padding: 10px 0;
 }
 
 .header .description .subject:hover {
