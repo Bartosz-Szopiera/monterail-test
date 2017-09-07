@@ -52,7 +52,6 @@ export default {
   props: ['question'],
   data() {
     return {
-      actions: [],
     }
   },
   methods : {
@@ -62,24 +61,10 @@ export default {
   },
   computed : {
     totalActivities() {
-      // Organize answers and comments to the question
-      // into an array.
-
-      this.actions = [];
-
-      for (let id in this.question.answers) {
-        let answer = this.question.answers[id];
-        this.actions.push(['answered', answer.author, Math.random()]);
-        for (let id in answer.comments) {
-          let comment = answer.comments[id];
-          this.actions.push(['commented', comment.author, Math.random()]);
-        }
-      }
-
-      // Sort according to assigned random values
-      this.actions.sort((a,b) => a[2] - b[2]);
-
-      return this.actions.length
+      return this.question.actions.length
+    },
+    actions() {
+      return this.question.actions
     },
     tiles() {
       // Maximum number of tiles displayed on screen

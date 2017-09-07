@@ -27,25 +27,40 @@ export default {
   data() {
     return {
       questions: [],
-      // filteredQuestions: '',
-      searchTerm: ''
+      searchTerm: '',
+      sort: 'recent'
     }
   },
   computed: {
     filteredQuestions() {
       // 'Un-filter' questions if query is empty
-      if (this.searchTerm === '') {
-        return this.questions;
-      }
+      if (this.searchTerm === '') return this.questions;
 
-      return (
-        thisQuestions.filter((question) => {
+      // return (
+      //   thisQuestions.filter((question) => {
+      //     return (
+      //       question.title.toLowerCase()
+      //       .match(this.searchTerm.toLowerCase())
+      //     )
+      //   })
+      // )
+      // Filter according to query string matches
+      let filtered = (
+        this.questions.filter((question) => {
           return (
             question.title.toLowerCase()
             .match(this.searchTerm.toLowerCase())
           )
         })
-      )
+      );
+      return filtered
+
+      // Data reveiced from the server is already in
+      // chronological so no further sorting is needed
+      // if (this.sort = 'recent') return filtered
+
+      // Filter according to the activity
+      // let sorted =
 
     }
   },
@@ -58,8 +73,32 @@ export default {
       // Put each question into `questions` array
       // and assign it an id equal to the 'key'.
       for (let key in data) {
-        data[key].id = key,
+        // Assign id
+        data[key].id = key;
         this.questions.push(data[key]);
+
+        // Find each action (answer or comment) and
+        // their author and save as metadata in current
+        // question
+        let actions = [];
+
+        for (let id in data[key].answers) {
+          let answer = data[key].answers[id];
+          actions.push(['answered', answer.author, Math.random()]);
+          for (let id in answer.comments) {
+            let comment = answer.comments[id];
+            actions.push(['commented', comment.author, Math.random()]);
+          }
+        }
+
+        // Sort according to assigned random values
+        // so that questionSummary component will
+        // display some of the random user actions
+        // in given question
+        actions.sort((a,b) => a[2] - b[2]);
+
+        // Save
+        data[key].actions = actions;
       }
     });
     this.filteredQuestions = this.questions;
@@ -67,6 +106,10 @@ export default {
   mounted() {
     // Start listening 'search' event on 'bus' instance
     bus.$on('search', (searchTerm) => {
+      this.searchTerm = searchTerm;
+    });
+    // Start listening 'sort' event
+    bus.$on('sort', (method) => {
       this.searchTerm = searchTerm;
     });
   }
