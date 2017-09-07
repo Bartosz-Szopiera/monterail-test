@@ -23,7 +23,8 @@ button {
 }
 
 button:hover,
-.avatar>div:hover {
+.avatar:hover,
+.userName:hover {
   cursor: pointer;
 }
 
@@ -62,7 +63,6 @@ button:hover,
 
 .blue {
   color: #0266b9;
-  font-weight: bold;
 }
 
 .grey {
