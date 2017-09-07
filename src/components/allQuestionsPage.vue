@@ -3,7 +3,7 @@
     <app-header></app-header>
     <pageBody>
       <questionSummary
-        v-for="question in filteredQuestions"
+        v-for="question in this.filteredQuestions"
         v-bind:question="question"
         v-bind:key="question.id">
       </questionSummary>
@@ -27,7 +27,26 @@ export default {
   data() {
     return {
       questions: [],
-      filteredQuestions: '',
+      // filteredQuestions: '',
+      searchTerm: ''
+    }
+  },
+  computed: {
+    filteredQuestions() {
+      // 'Un-filter' questions if query is empty
+      if (this.searchTerm === '') {
+        return this.questions;
+      }
+
+      return (
+        thisQuestions.filter((question) => {
+          return (
+            question.title.toLowerCase()
+            .match(this.searchTerm.toLowerCase())
+          )
+        })
+      )
+
     }
   },
   created() {
@@ -48,22 +67,9 @@ export default {
   mounted() {
     // Start listening 'search' event on 'bus' instance
     bus.$on('search', (searchTerm) => {
-      // 'Un-filter' questions if query is empty
-      if (searchTerm === '') {
-        this.filteredQuestions = this.questions;
-      }
-
-      // Perform case-insensitive search of the query
-      // within question's titles
-      this.filteredQuestions =
-        this.questions.filter((question) => {
-        return  (
-          question.title.toLowerCase()
-          .match(searchTerm.toLowerCase())
-          )
-        });
+      this.searchTerm = searchTerm;
     });
-  },
+  }
 }
 </script>
 
