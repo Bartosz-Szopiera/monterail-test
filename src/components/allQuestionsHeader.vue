@@ -38,11 +38,11 @@
               </div>
           </div>
 
-          <div class="sortBy">
+          <div class="sortBy recent">
             <span class="italic">Sort by: </span>
-            <span class="recent active">recent</span>
+            <span @click="sortQuestions('recent')" class="recent">recent</span>
             <span class="italic">or</span>
-            <span class="hot">hot</span>
+            <span @click="sortQuestions('hot')" class="hot">hot</span>
           </div>
 
           <input v-model="search" class="queryField" type="text" placeholder="Search questions">
@@ -65,11 +65,16 @@ export default {
       searchOptions: false
     }
   },
-  methods : {
+  methods: {
     listenSearch() {
       bus.$emit('search', this.search);
+    },
+    sortQuestions(method) {
+      // Change active element
+      event.target.parentNode.classList.toggle('recent');
+      bus.$emit('sort', method)
     }
-  }
+  },
 }
 </script>
 
@@ -297,7 +302,8 @@ h1 {
   cursor: pointer;
 }
 
-.sortBy .recent.active, .sortBy .hot.active {
+.sortBy.recent .recent,
+.sortBy:not(.recent) .hot {
   color: #a7a9ac;
   text-decoration: underline;
 }

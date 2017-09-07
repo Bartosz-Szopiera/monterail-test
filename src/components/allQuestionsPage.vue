@@ -3,12 +3,11 @@
     <app-header></app-header>
     <pageBody>
       <questionSummary
-        v-for="question in this.filteredQuestions"
+        v-for="question in this.sortedQuestions"
         v-bind:question="question"
         v-bind:key="question.id">
       </questionSummary>
     </pageBody>
-
   </div>
 </template>
 
@@ -28,23 +27,14 @@ export default {
     return {
       questions: [],
       searchTerm: '',
-      sort: 'recent'
+      sort: 'recent',
     }
   },
   computed: {
     filteredQuestions() {
       // 'Un-filter' questions if query is empty
-      if (this.searchTerm === '') return this.questions;
+      if (this.searchTerm === '') return this.questions
 
-      // return (
-      //   thisQuestions.filter((question) => {
-      //     return (
-      //       question.title.toLowerCase()
-      //       .match(this.searchTerm.toLowerCase())
-      //     )
-      //   })
-      // )
-      // Filter according to query string matches
       let filtered = (
         this.questions.filter((question) => {
           return (
@@ -53,15 +43,24 @@ export default {
           )
         })
       );
-      return filtered
 
+      return filtered
+    },
+    sortedQuestions() {
       // Data reveiced from the server is already in
       // chronological so no further sorting is needed
-      // if (this.sort = 'recent') return filtered
+      if (this.sort === 'recent') {
+        return this.filteredQuestions
+      }
+
+      let sorted = [...this.filteredQuestions];
 
       // Filter according to the activity
-      // let sorted =
+      sorted.sort((quesA,quesB) => {
+          return (quesB.actions.length - quesA.actions.length)
+        });
 
+      return sorted
     }
   },
   created() {
@@ -110,7 +109,7 @@ export default {
     });
     // Start listening 'sort' event
     bus.$on('sort', (method) => {
-      this.searchTerm = searchTerm;
+      this.sort = method;
     });
   }
 }

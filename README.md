@@ -123,7 +123,8 @@ changes:
 - [ ] Load only limited number of questions from JSON to
   the all-question view.
 - [ ] Add button to load more questions.
-- [ ] Add timestamp to each question for sorting.
+- [x] Sort questions based on activity (chronological
+  order is default).
 - [x] Add method to read certain data from question and
   display it in the `questionSummary` component
   (the single question "tile" in all-questions vie)
