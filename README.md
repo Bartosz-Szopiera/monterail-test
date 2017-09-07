@@ -120,20 +120,18 @@ working "app". It will also allow me to test RWD on a mobile.~~
 I would like to make it look like more finished piece of work
 so in the coming days I will try to introduce following
 changes:
-- [ ] Load only limited number of question from Firebase
-  and display all on the all-question view.
-- [ ] Load only limited number of questions from JSON to the
-  all-question view.
+- [ ] Load only limited number of questions from JSON to
+  the all-question view.
 - [ ] Add button to load more questions.
 - [ ] Add timestamp to each question for sorting.
-- [ ] Add method to read certain data from question and
+- [x] Add method to read certain data from question and
   display it in the `questionSummary` component
   (the single question "tile" in all-questions vie)
     - peers involved
     - total number of activities (answers + comments)
-- [ ] Fix titles of questions to accommodate better to long
-  chunks of text (however with some limit).
-- [ ] Add 'link' to profile modal to each user avatar and name
+- [x] Fix titles of questions to accommodate better to long
+  chunks of text.
+- [x] Add 'link' to profile modal to each user avatar and name
   except from avatar in modal itself.
 - [ ] Anchor page's header (fixed position).
 - [ ] Disable viewport scroll while profile modal is visible.
