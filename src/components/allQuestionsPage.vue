@@ -74,7 +74,6 @@ export default {
       for (let key in data) {
         // Assign id
         data[key].id = key;
-        this.questions.push(data[key]);
 
         // Find each action (answer or comment) and
         // their author and save as metadata in current
@@ -96,11 +95,18 @@ export default {
         // in given question
         actions.sort((a,b) => a[2] - b[2]);
 
-        // Save
         data[key].actions = actions;
+
+        this.questions.push(data[key]);
       }
+
+      // Sort questions chronologically
+      this.questions.sort((quesA, quesB) => {
+        return (quesB.time - quesA.time)
+      });
+
+      this.filteredQuestions = this.questions;
     });
-    this.filteredQuestions = this.questions;
   },
   mounted() {
     // Start listening 'search' event on 'bus' instance
