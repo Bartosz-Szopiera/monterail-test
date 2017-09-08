@@ -50,10 +50,6 @@ import bus from '../main.js';
 
 export default {
   props: ['question'],
-  data() {
-    return {
-    }
-  },
   methods : {
     busEvent(eventName) {
       bus.$emit(eventName);
@@ -73,8 +69,6 @@ export default {
       return this.actions.slice(0,tilesToDraw)
     }
   },
-  mounted() {
-  }
 }
 </script>
 
@@ -315,10 +309,6 @@ export default {
   .wrapActivity {
     padding-right: 150px;
   }
-
-  /*.activity .peer:not(:nth-child(3)) {
-    display: none;
-  }*/
 
   .sidebar {
     position: absolute;
