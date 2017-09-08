@@ -120,9 +120,9 @@ working "app". It will also allow me to test RWD on a mobile.~~
 I would like to make it look like more finished piece of work
 so in the coming days I will try to introduce following
 changes:
-- [ ] Load only limited number of questions from JSON to
+- [x] Load only limited number of questions from JSON to
   the all-question view.
-- [ ] Add button to load more questions.
+- [x] Add button to load more questions.
 - [x] Sort questions based on activity (chronological
   order is default).
 - [x] Add method to read certain data from question and
@@ -136,3 +136,6 @@ changes:
   except from avatar in modal itself.
 - [ ] Anchor page's header (fixed position).
 - [ ] Disable viewport scroll while profile modal is visible.
+- [ ] Impose limit on number of questions loaded from
+  database by server-side script, and modifying function
+  querying server.
