@@ -3,10 +3,18 @@
     <app-header></app-header>
     <pageBody>
       <questionSummary
-        v-for="question in this.sortedQuestions"
+        v-for="question in this.displayQuestions"
         v-bind:question="question"
         v-bind:key="question.id">
       </questionSummary>
+      <div class="column">
+        <div class="main">
+          <button class="normal" @click="questionsLimit += 5">
+            <p v-if="questionsLimit < this.questions.length">Show more questions</p>
+            <p v-else="true">No more questions to show</p>
+          </button>
+        </div>
+      </div>
     </pageBody>
   </div>
 </template>
@@ -16,6 +24,7 @@ import questionSummary from './questionSummary.vue';
 import header from './allQuestionsHeader.vue';
 import pageBody from './pageBody.vue';
 import bus from '../main.js';
+import loadQuestions from '../mixins/loadQuestions';
 
 export default {
   components: {
@@ -28,6 +37,7 @@ export default {
       questions: [],
       searchTerm: '',
       sort: 'recent',
+      questionsLimit: 5
     }
   },
   computed: {
@@ -61,52 +71,10 @@ export default {
         });
 
       return sorted
+    },
+    displayQuestions() {
+      return this.sortedQuestions.slice(0,this.questionsLimit)
     }
-  },
-  created() {
-    // Request data
-    const url = 'https://monterail-123.firebaseio.com/questions.json';
-    this.$http.get(url).then(function(data){
-      return data.json()
-    }).then(function(data){
-      // Put each question into `questions` array
-      // and assign it an id equal to the 'key'.
-      for (let key in data) {
-        // Assign id
-        data[key].id = key;
-
-        // Find each action (answer or comment) and
-        // their author and save as metadata in current
-        // question
-        let actions = [];
-
-        for (let id in data[key].answers) {
-          let answer = data[key].answers[id];
-          actions.push(['answered', answer.author, Math.random()]);
-          for (let id in answer.comments) {
-            let comment = answer.comments[id];
-            actions.push(['commented', comment.author, Math.random()]);
-          }
-        }
-
-        // Sort according to assigned random values
-        // so that questionSummary component will
-        // display some of the random user actions
-        // in given question
-        actions.sort((a,b) => a[2] - b[2]);
-
-        data[key].actions = actions;
-
-        this.questions.push(data[key]);
-      }
-
-      // Sort questions chronologically
-      this.questions.sort((quesA, quesB) => {
-        return (quesB.time - quesA.time)
-      });
-
-      this.filteredQuestions = this.questions;
-    });
   },
   mounted() {
     // Start listening 'search' event on 'bus' instance
@@ -117,9 +85,88 @@ export default {
     bus.$on('sort', (method) => {
       this.sort = method;
     });
-  }
+  },
+  mixins: [loadQuestions]
 }
 </script>
 
 <style lang="css" scoped>
+
+.column {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.main {
+  flex: 0 0 auto;
+  padding-bottom: 20px;
+  width: 600px;
+}
+
+.main >* {
+  z-index: 1;
+  position: relative;
+}
+
+/*Shadow*/
+.main::after {
+  content: '';
+  position: absolute;
+  display: block;
+  left: 4px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background: transparent;
+  box-shadow: -2px 0 2px 0 #EEE, 2px 0 2px 0 #EEE;
+  border-bottom: 2px solid rgba(223,243,253,1);
+  z-index: 0;
+}
+
+button {
+  border: none;
+  background: none;
+  -webkit-appearance: none;
+  font-size: 1em;
+  color: #E00;
+}
+
+/*Media Queries*/
+
+/*960px*/
+@media (max-width : 60em) {
+
+  .column {
+    width: 760px;
+  }
+
+}
+
+/*800px*/
+@media (max-width : 50em) {
+
+  .column, .main {
+    width: 100%;
+    display: block;
+  }
+
+}
+
+/*544px*/
+@media (max-width : 34em) {
+
+  .main .header {
+    min-height: 72px;
+  }
+
+  .main {
+    padding-bottom: 28px;
+  }
+
+}
+
 </style>
