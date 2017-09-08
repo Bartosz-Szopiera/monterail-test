@@ -34,7 +34,7 @@
 
       </div>
 
-      <button id="close" @click="$emit('close')"></button>
+      <button id="close" @click="busEvent('closeModal')"></button>
 
       <div class="main">
         <origin></origin>
@@ -46,10 +46,16 @@
 
 <script>
 import origin from './profileOrigin.vue';
+import bus from '../main.js';
 
 export default {
   components: {
     'origin':  origin,
+  },
+  methods: {
+    busEvent(eventName) {
+      bus.$emit(eventName);
+    }
   }
 }
 </script>
@@ -77,7 +83,8 @@ export default {
     top: 0;
     bottom: 0;
     margin: auto;
-    height: 90vh;
+    /*height: 90vh;*/
+    height: 90%;
     width: 80%;
     max-width: 850px;
     min-width: 668px;

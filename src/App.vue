@@ -1,6 +1,7 @@
 <template>
   <div>
-    <profile v-if="profileModal" @close="profileModal = false" ></profile>
+    <!-- <profile v-if="profileModal" @close="hideModal" ></profile> -->
+    <profile ref="profile" v-if="profileModal"></profile>
     <router-view></router-view>
   </div>
 </template>
@@ -10,6 +11,7 @@ import allQuestions from './components/allQuestionsPage.vue';
 import singleQuestion from './components/singleQuestionPage.vue';
 import profile from './components/profile.vue';
 import bus from './main.js';
+import scrollEvent from './js/scrollEvent';
 
 export default {
   components: {
@@ -25,8 +27,16 @@ export default {
   methods: {
   },
   mounted() {
+    // console.log(this);
     bus.$on('showModal', ()=> {
       this.profileModal = true;
+      // document.body.style.overflowY = 'hidden';
+      scrollEvent.disableScroll();
+    });
+    bus.$on('closeModal', ()=>{
+      this.profileModal = false;
+      // document.body.style.overflowY = 'scroll';
+      scrollEvent.enableScroll();
     });
   }
 }
