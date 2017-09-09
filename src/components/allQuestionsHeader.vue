@@ -1,68 +1,77 @@
 <template lang="html">
-  <div class="headerBackground">
-    <div class="headerWrapper">
+  <div>
+    <div ref="header" class="headerBackground">
+      <div class="headerWrapper">
 
-      <div class="buttonWrapper">
-        <router-link to="">
-          <button class="goBack"></button>
-        </router-link>
-      </div>
-
-      <div class="menuButton" @click="searchOptions = !searchOptions"></div>
-
-      <div class="column" :class="{searchOptions}">
-
-        <div class="wrap">
-          <h1>QUESTIONS</h1>
-          <button class="addQuestion"></button>
+        <div class="buttonWrapper">
+          <router-link to="">
+            <button class="goBack"></button>
+          </router-link>
         </div>
 
-        <div class="controls questionFilter">
-          <div class="dataset">
-            <label class="userShelf">
-              <input type="radio" name="mode" value="shelf">
-              My shelf
-            </label>
-            <label class="allQuestions">
-              <input type="radio" checked name="mode" value="all">
-              All questions
-            </label>
+        <div class="menuButton" @click="searchOptions = !searchOptions"></div>
+
+        <div class="column" :class="{searchOptions}">
+
+          <div class="wrap">
+            <h1>QUESTIONS</h1>
+            <button class="addQuestion"></button>
           </div>
 
-          <div class="dataset mobile italic">
+          <div class="controls questionFilter">
+            <div class="dataset">
+              <label class="userShelf">
+                <input type="radio" name="mode" value="shelf">
+                My shelf
+              </label>
+              <label class="allQuestions">
+                <input type="radio" checked name="mode" value="all">
+                All questions
+              </label>
+            </div>
+
+            <div class="dataset mobile italic">
               <div class="selectWrap">
                 <select class="normal grey" name="">
                   <option value="shelf">My shelf</option>
                   <option value="all" selected>All questions</option>
                 </select>
               </div>
+            </div>
+
+            <div class="sortBy recent">
+              <span class="italic">Sort by: </span>
+              <span @click="sortQuestions('recent')" class="recent">recent</span>
+              <span class="italic">or</span>
+              <span @click="sortQuestions('hot')" class="hot">hot</span>
+            </div>
+
+            <input v-model="search" class="queryField" type="text" placeholder="Search questions">
+
+            <button @click="listenSearch()" class="searchButton">SEARCH</button>
           </div>
 
-          <div class="sortBy recent">
-            <span class="italic">Sort by: </span>
-            <span @click="sortQuestions('recent')" class="recent">recent</span>
-            <span class="italic">or</span>
-            <span @click="sortQuestions('hot')" class="hot">hot</span>
-          </div>
-
-          <input v-model="search" class="queryField" type="text" placeholder="Search questions">
-
-          <button @click="listenSearch()" class="searchButton">SEARCH</button>
         </div>
-
       </div>
     </div>
+
+    <!-- Placeholder keeping content flow
+    coherent when header is in fixed position -->
+    <div ref="shadow" class="shadow"></div>
+
   </div>
 </template>
 
 <script>
-import bus from '../main.js';
+import bus from '../main';
+import rollUpHeader from '../js/rollUpHeader';
 
 export default {
   data() {
     return {
       search: '',
-      searchOptions: false
+      searchOptions: false,
+      listenScroll: null
     }
   },
   methods: {
@@ -75,10 +84,95 @@ export default {
       bus.$emit('sort', method)
     }
   },
+  mounted() {
+    (function() {
+      // Attach listener for transforming header into
+      // compact form.
+
+      // Header width at which it assumes compact form
+      // at which point it should not be subject of
+      // tranformation
+      const breakingPoint = 544;
+
+      // If device dimensions are below breaking point
+      // for 'mobile' header, return
+      if (Math.max(screen.availWidth,screen.availHeight) <= breakingPoint) {
+        return
+      }
+
+      // Determin scrollbar width
+      const scrWidth = (function(){
+        const div1 = document.createElement('div');
+        div1.style.visibility = 'hidden';
+        div1.style.overflowY = 'scroll';
+        div1.style.width = '100vw';
+        document.body.appendChild(div1);
+        const div2 = document.createElement('div');
+        div2.style.visibility = 'hidden';
+        div1.appendChild(div2);
+        const width = (div1.offsetWidth - div2.offsetWidth);
+        document.body.removeChild(div1);
+        return width
+      })();
+
+      const header = this.$refs.header;
+      const headerWidth = header.offsetWidth;
+
+      // Get viewport diemnsion closer to the header with
+      const viewWidth =
+      [window.innerWidth, window.innerHeight].find((a)=>{
+        return (headerWidth + scrWidth) === a
+      })
+
+      // Define handler for scroll event:
+      const handler = function() {
+        rollUpHeader(header, handler);
+      }
+      // Attach listener already if condition is met
+      if (viewWidth > breakingPoint) {
+        document.addEventListener('scroll', handler);
+        this.listenScroll = true;
+      }
+
+      // Define resize listener to remove scroll handling
+      // when viewport drops in size
+      window.addEventListener('resize', function(){
+        const headerWidth = header.offsetWidth;
+
+        // Define viewport width (lateral dimension)
+        const viewWidth =
+        [window.innerWidth, window.innerHeight].find((a)=>{
+          return (headerWidth + scrWidth) === a
+        })
+
+        if (viewWidth <= breakingPoint && this.listenScroll) {
+          document.removeEventListener('scroll', handler);
+          this.listenScroll = false;
+          // Remove style
+          const column = header.querySelector('.column');
+          const button = header.querySelector('.buttonWrapper');
+          column.style = '';
+          button.style = '';
+        }
+        else if (viewWidth > breakingPoint && !this.listenScroll) {
+          // Call handler to perform initial header setup
+          handler();
+          document.addEventListener('scroll',handler);
+          this.listenScroll = true;
+        }
+      });
+
+    }).call(this);
+  }
 }
 </script>
 
 <style lang="css" scoped>
+
+.shadow {
+  width: 100%;
+  height: 155px;
+}
 
 .headerBackground {
   margin: 0 auto;
@@ -86,8 +180,8 @@ export default {
   display: flex;
   justify-content: center;
   background: #FFF;
-  position: relative;
-  z-index: 1;
+  position: fixed;
+  z-index: 2;
 }
 
 .headerWrapper {
@@ -428,6 +522,10 @@ h1 {
 /*544px*/
 @media (max-width : 34em) {
 
+  .shadow {
+    height: 55px;
+  }
+
   .buttonWrapper {
     top: 10px;
     padding: 0 15px;
@@ -440,7 +538,6 @@ h1 {
   .column {
     margin: 10px auto;
     height: 35px;
-    /*height: auto;*/
   }
 
   .column.searchOptions {
