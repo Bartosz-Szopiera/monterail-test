@@ -1,27 +1,34 @@
 <template lang="html">
-  <div class="headerBackground">
-    <div class="headerWrapper">
+  <div>
+    <div class="headerBackground">
+      <div class="headerWrapper">
 
-      <div class="buttonWrapper">
-        <router-link to="/">
-          <button class="goBack"></button>
-        </router-link>
-      </div>
-
-      <div class="column">
-
-        <div class="wrap">
-          <h1>QUESTIONS</h1>
-          <button class="addQuestion"></button>
+        <div class="buttonWrapper">
+          <router-link to="/">
+            <button class="goBack"></button>
+          </router-link>
         </div>
 
-        <div class="activity">
-          <p class="italic">Last time discussed <span class="number normal timeUnit">1</span> <span class="timeUnit">day</span> ago
-          </p>
-        </div>
+        <div class="column">
 
+          <div class="wrap">
+            <h1>QUESTIONS</h1>
+            <button class="addQuestion"></button>
+          </div>
+
+          <div class="activity">
+            <p class="italic">Last time discussed <span class="number normal timeUnit">1</span> <span class="timeUnit">day</span> ago
+            </p>
+          </div>
+
+        </div>
       </div>
     </div>
+
+    <!-- Placeholder keeping content flow
+    coherent when header is in fixed position -->
+    <div class="shadow"></div>
+
   </div>
 </template>
 
@@ -34,18 +41,22 @@ export default {
 
 <style lang="css" scoped>
 
+.shadow {
+  width: 100%;
+  height: 115px;
+}
+
 .headerBackground {
   margin: 0 auto;
   width: 100%;
   display: flex;
   justify-content: center;
   background: #FFF;
-  position: relative;
-  z-index: 1;
+  position: fixed;
+  z-index: 2;
 }
 
 .headerWrapper {
-  /*width: 100vw;*/
   width: 100%;
   flex: 0 0 auto;
   box-shadow: 0 0px 3px 0 #CCC;
@@ -193,6 +204,10 @@ h1 {
   .buttonWrapper {
     top: 10px;
     padding: 0 15px;
+  }
+
+  .shadow {
+    height: 55px;
   }
 
   .column {
