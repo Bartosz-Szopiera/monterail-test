@@ -134,7 +134,7 @@ changes:
   chunks of text.
 - [x] Add 'link' to profile modal to each user avatar and name
   except from avatar in modal itself.
-- [ ] Anchor page's header (fixed position).
+- [x] Anchor page's header (fixed position).
 - [x] Disable viewport scroll while profile modal is visible.
 - [ ] Impose limit on number of questions loaded from
   database by server-side script, and modifying function
