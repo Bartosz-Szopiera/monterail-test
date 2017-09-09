@@ -14,13 +14,13 @@ function rollUpHeader(header, handler) {
 
   const scrollTop = document.body.scrollTop;
   // Throttle
-  if (scrollTop > 200) {
-    window.document.removeEventListener('scroll', handler);
-    setTimeout(function(){
-      window.document.addEventListener('scroll', handler)
-    },100)
-    return
-  }
+  // if (scrollTop > 200) {
+  //   window.document.removeEventListener('scroll', handler);
+  //   setTimeout(function(){
+  //     window.document.addEventListener('scroll', handler)
+  //   },100)
+  //   return
+  // }
 
   const startHeight = 125;
   const endHeight = 80;
