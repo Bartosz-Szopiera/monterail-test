@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <profile v-if="profileModal" @close="hideModal" ></profile> -->
     <profile ref="profile" v-if="profileModal"></profile>
     <router-view></router-view>
   </div>
@@ -23,8 +22,6 @@ export default {
     return {
       profileModal: false,
     }
-  },
-  methods: {
   },
   mounted() {
     // console.log(this);
